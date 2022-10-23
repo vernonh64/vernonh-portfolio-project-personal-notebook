@@ -1,0 +1,34 @@
+//views
+@views.route('/delete-note', methods=['POST'])
+def delete_note():
+    note = json.loads(request.data)
+    noteId = note['noteId']
+    note = Note.query.get(noteId)
+    if note:
+        if note.user_id == current_user.id:
+            db.session.delete(note)
+            db.session.commit()
+        
+    return jsonify({})
+
+
+//homes
+<ul class="list-group list-group-flush" id="notes">
+    {% for note in user.notes %}
+    <li class="list-group-item" id="notes">
+        {{note.data}}
+    <button type="button" class="close" onClick="deleteNote({{ note.id }})">
+        <span aria-hidden="true">&times;</span>
+    </button>
+    </li>
+    {%endfor%}
+</ul>
+
+
+create a javascript that open and close uploaded images
+
+
+<script
+    type="text/javascript"
+    src="{{ url_for('static', filename='index.js') }}"
+  ></script>
